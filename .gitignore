@@ -1,0 +1,4 @@
+config.json
+api/api.gen.go
+proto/gen/
+.bin/
