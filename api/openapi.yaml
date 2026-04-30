@@ -116,11 +116,12 @@ components:
         account:
           type: integer
           format: uint32
-          example: 100
+          example: 0
         change:
           type: integer
           format: uint32
-          example: 123
+          maximum: 1
+          example: 0
         address_index:
           type: integer
           format: uint32
@@ -217,11 +218,12 @@ components:
         account:
           type: integer
           format: uint32
-          example: 100
+          example: 0
         change:
           type: integer
           format: uint32
-          example: 123
+          maximum: 1
+          example: 0
         address_index:
           type: integer
           format: uint32

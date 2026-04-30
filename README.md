@@ -16,6 +16,6 @@
 
 ```shell
 docker network create sheepy-tt-network
-docker build . -t sheepy-tt-go
-docker run -v "$(pwd)/config.json:/app/config.json:ro" sheepy-tt-go
+docker build . -t go-wallet
+docker run -v "$(pwd)/config.json:/app/config.json:ro" -n go-wallet go-wallet 
 ```
