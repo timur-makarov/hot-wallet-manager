@@ -16,7 +16,6 @@ func testService(t *testing.T) *WalletService {
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Cleanup(repo.Close)
 
 	return NewWalletService(map[string]*repositories.WalletCoreRepository{
 		"ethereum_sepolia": repo,

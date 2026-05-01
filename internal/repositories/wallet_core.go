@@ -71,14 +71,6 @@ func NewWalletCoreRepository(name, mnemonic string) (*WalletCoreRepository, erro
 	}, nil
 }
 
-func (r *WalletCoreRepository) Close() {
-	if r == nil || r.wallet == nil {
-		return
-	}
-	C.TWHDWalletDelete(r.wallet)
-	r.wallet = nil
-}
-
 func (r *WalletCoreRepository) Name() string { return r.name }
 
 // m/44'/60'/<account>'/<change>/<addressIndex>

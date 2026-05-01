@@ -30,12 +30,3 @@ func NewApp(cfg *config.Config) (*App, error) {
 
 	return app, nil
 }
-
-// Close releases external resources (currently the per-gate wallet-core
-// HD wallet handles). Safe to call multiple times.
-func (a *App) Close() {
-	if a == nil {
-		return
-	}
-	a.repositories.Close()
-}

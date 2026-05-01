@@ -16,23 +16,9 @@ func GetRepositories(cfg *config.Config) (*Repositories, error) {
 	for _, gate := range cfg.Gates {
 		repo, err := repositories.NewWalletCoreRepository(gate.Name, gate.Mnemonic)
 		if err != nil {
-			closeAll(wallets)
 			return nil, fmt.Errorf("failed to load gate %q: %w", gate.Name, err)
 		}
 		wallets[gate.Name] = repo
 	}
 	return &Repositories{Wallets: wallets}, nil
-}
-
-func (r *Repositories) Close() {
-	if r == nil {
-		return
-	}
-	closeAll(r.Wallets)
-}
-
-func closeAll(wallets map[string]*repositories.WalletCoreRepository) {
-	for _, w := range wallets {
-		w.Close()
-	}
 }

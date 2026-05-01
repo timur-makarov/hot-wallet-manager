@@ -26,7 +26,6 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	defer application.Close()
 
 	httpServer := server.InitServer(cfg, application)
 	log.Printf("wallet service listening on %s", httpServer.Addr)
