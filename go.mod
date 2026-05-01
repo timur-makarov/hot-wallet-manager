@@ -1,4 +1,4 @@
-module github.com/timur-makarov/sheepy-tt-go-wallet
+module github.com/timur-makarov/hot-wallet-manager
 
 go 1.26.0
 

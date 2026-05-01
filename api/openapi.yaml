@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: Sheepy TT Go Wallet
+  title: Hot Wallet Manager
   version: 1.0.0
 
 servers:

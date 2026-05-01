@@ -6,10 +6,10 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/timur-makarov/sheepy-tt-go-wallet/api"
-	"github.com/timur-makarov/sheepy-tt-go-wallet/internal/app"
-	"github.com/timur-makarov/sheepy-tt-go-wallet/internal/config"
-	"github.com/timur-makarov/sheepy-tt-go-wallet/internal/transport"
+	"github.com/timur-makarov/hot-wallet-manager/api"
+	"github.com/timur-makarov/hot-wallet-manager/internal/app"
+	"github.com/timur-makarov/hot-wallet-manager/internal/config"
+	"github.com/timur-makarov/hot-wallet-manager/internal/transport"
 )
 
 func InitServer(cfg *config.Config, a *app.App) *http.Server {

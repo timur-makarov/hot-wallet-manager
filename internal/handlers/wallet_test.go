@@ -5,9 +5,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/timur-makarov/sheepy-tt-go-wallet/api"
-	"github.com/timur-makarov/sheepy-tt-go-wallet/internal/app/repositories"
-	"github.com/timur-makarov/sheepy-tt-go-wallet/internal/services"
+	"github.com/timur-makarov/hot-wallet-manager/api"
+	"github.com/timur-makarov/hot-wallet-manager/internal/app/repositories"
+	"github.com/timur-makarov/hot-wallet-manager/internal/services"
 )
 
 const testMnemonic = "test test test test test test test test test test test junk"
@@ -15,14 +15,14 @@ const testMnemonic = "test test test test test test test test test test test jun
 func testWalletHandler(t *testing.T) WalletHandler {
 	t.Helper()
 
-	repo, err := repositories.NewWalletCoreRepository("ethereum", testMnemonic)
+	repo, err := repositories.NewWalletCoreRepository("ethereum_sepolia", testMnemonic)
 	if err != nil {
 		t.Fatal(err)
 	}
 	t.Cleanup(repo.Close)
 
 	service := services.NewWalletService(map[string]*repositories.WalletCoreRepository{
-		"ethereum": repo,
+		"ethereum_sepolia": repo,
 	})
 
 	return WalletHandler{Service: service}
@@ -33,7 +33,7 @@ func TestWalletHandlerCreateAddress(t *testing.T) {
 
 	response, err := handler.CreateAddress(context.Background(), api.CreateAddressRequestObject{
 		Body: &api.CreateAddressJSONRequestBody{
-			Gate:         "ethereum",
+			Gate:         "ethereum_sepolia",
 			Account:      0,
 			Change:       0,
 			AddressIndex: 0,
@@ -57,7 +57,7 @@ func TestWalletHandlerValidateAddress(t *testing.T) {
 
 	response, err := handler.ValidateAddress(context.Background(), api.ValidateAddressRequestObject{
 		Body: &api.ValidateAddressJSONRequestBody{
-			Gate:    "ethereum",
+			Gate:    "ethereum_sepolia",
 			Address: "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
 		},
 	})
@@ -79,7 +79,7 @@ func TestWalletHandlerSignTransaction(t *testing.T) {
 
 	response, err := handler.SignTransaction(context.Background(), api.SignTransactionRequestObject{
 		Body: &api.SignTransactionJSONRequestBody{
-			Gate:         "ethereum",
+			Gate:         "ethereum_sepolia",
 			Account:      0,
 			Change:       0,
 			AddressIndex: 0,

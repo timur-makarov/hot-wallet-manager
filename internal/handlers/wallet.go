@@ -3,9 +3,9 @@ package handlers
 import (
 	"context"
 
-	"github.com/timur-makarov/sheepy-tt-go-wallet/api"
-	"github.com/timur-makarov/sheepy-tt-go-wallet/internal/services"
-	"github.com/timur-makarov/sheepy-tt-go-wallet/internal/transport"
+	"github.com/timur-makarov/hot-wallet-manager/api"
+	"github.com/timur-makarov/hot-wallet-manager/internal/services"
+	"github.com/timur-makarov/hot-wallet-manager/internal/transport"
 )
 
 type WalletHandler struct {

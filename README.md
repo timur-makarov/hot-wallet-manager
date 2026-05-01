@@ -1,4 +1,4 @@
-# Sheepy TT Go Wallet Service
+# Hot Wallet Manager
 
 ## Architecture
 
@@ -15,7 +15,7 @@
 ## How to Run
 
 ```shell
-docker network create sheepy-tt-network
-docker build . -t go-wallet
-docker run -v "$(pwd)/config.json:/app/config.json:ro" -n go-wallet go-wallet 
+docker network create payment-gates-network
+docker build . -t hwm
+docker run -v "$(pwd)/config.json:/app/config.json:ro" -n hot-wallet-manager hwm
 ```

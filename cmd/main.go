@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/timur-makarov/sheepy-tt-go-wallet/internal/app"
-	"github.com/timur-makarov/sheepy-tt-go-wallet/internal/config"
-	"github.com/timur-makarov/sheepy-tt-go-wallet/internal/server"
+	"github.com/timur-makarov/hot-wallet-manager/internal/app"
+	"github.com/timur-makarov/hot-wallet-manager/internal/config"
+	"github.com/timur-makarov/hot-wallet-manager/internal/server"
 )
 
 func main() {

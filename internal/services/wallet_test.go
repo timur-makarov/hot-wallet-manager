@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/timur-makarov/sheepy-tt-go-wallet/internal/app/repositories"
+	"github.com/timur-makarov/hot-wallet-manager/internal/app/repositories"
 )
 
 const testMnemonic = "test test test test test test test test test test test junk"
@@ -12,14 +12,14 @@ const testMnemonic = "test test test test test test test test test test test jun
 func testService(t *testing.T) *WalletService {
 	t.Helper()
 
-	repo, err := repositories.NewWalletCoreRepository("ethereum", testMnemonic)
+	repo, err := repositories.NewWalletCoreRepository("ethereum_sepolia", testMnemonic)
 	if err != nil {
 		t.Fatal(err)
 	}
 	t.Cleanup(repo.Close)
 
 	return NewWalletService(map[string]*repositories.WalletCoreRepository{
-		"ethereum": repo,
+		"ethereum_sepolia": repo,
 	})
 }
 
@@ -27,7 +27,7 @@ func TestCreateAddress(t *testing.T) {
 	service := testService(t)
 
 	address, err := service.CreateAddress(DerivationRequest{
-		Gate:         "ethereum",
+		Gate:         "ethereum_sepolia",
 		Account:      0,
 		Change:       0,
 		AddressIndex: 0,
@@ -44,7 +44,7 @@ func TestCreateAddress(t *testing.T) {
 func TestValidateAddress(t *testing.T) {
 	service := testService(t)
 
-	valid, err := service.ValidateAddress("ethereum", "0xF39Fd6e51aad88F6F4ce6aB8827279cffFb92266")
+	valid, err := service.ValidateAddress("ethereum_sepolia", "0xF39Fd6e51aad88F6F4ce6aB8827279cffFb92266")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -52,7 +52,7 @@ func TestValidateAddress(t *testing.T) {
 		t.Fatal("expected address to be valid")
 	}
 
-	valid, err = service.ValidateAddress("ethereum", "not-an-address")
+	valid, err = service.ValidateAddress("ethereum_sepolia", "not-an-address")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -66,7 +66,7 @@ func TestSignTransaction(t *testing.T) {
 
 	signed, err := service.SignTransaction(SignTxRequest{
 		DerivationRequest: DerivationRequest{
-			Gate:         "ethereum",
+			Gate:         "ethereum_sepolia",
 			Account:      0,
 			Change:       0,
 			AddressIndex: 0,

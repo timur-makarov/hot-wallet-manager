@@ -21,16 +21,11 @@ import (
 
 	"google.golang.org/protobuf/proto"
 
-	"github.com/timur-makarov/sheepy-tt-go-wallet/internal/types"
-	common "github.com/timur-makarov/sheepy-tt-go-wallet/proto/gen/common"
-	ethereum "github.com/timur-makarov/sheepy-tt-go-wallet/proto/gen/ethereum"
+	"github.com/timur-makarov/hot-wallet-manager/internal/types"
+	common "github.com/timur-makarov/hot-wallet-manager/proto/gen/common"
+	ethereum "github.com/timur-makarov/hot-wallet-manager/proto/gen/ethereum"
 )
 
-// EthereumTxParams is the canonical, already-validated input for
-// signing an EIP-1559 (type-2) Ethereum transaction.
-//
-// All wei amounts are represented as *big.Int to avoid string parsing here;
-// it is the service layer's job to validate ranges and parse JSON.
 type EthereumTxParams struct {
 	To                      string
 	ValueWei                *big.Int
@@ -42,30 +37,16 @@ type EthereumTxParams struct {
 	MaxPriorityFeePerGasWei *big.Int
 }
 
-// EthereumSignedTx is the result of an offline EIP-1559 signing.
-//
-// Encoded already includes the 0x02 envelope byte and is ready to be
-// broadcast as the payload of `eth_sendRawTransaction`.
 type EthereumSignedTx struct {
 	TxHash  string // 0x-prefixed hex of keccak256(Encoded)
 	Encoded []byte
 }
 
-// WalletCoreRepository is a thin wrapper around a single Trust Wallet Core
-// HD wallet handle (derived from a BIP39 mnemonic). One instance per gate.
-//
-// The wrapped *TWHDWallet is owned by this repository and must be released
-// with Close. The repository is intended to be created at process start and
-// reused for the lifetime of the service; it is safe for concurrent reads
-// because TWHDWallet only exposes pure derivation/signing operations that
-// do not mutate internal state.
 type WalletCoreRepository struct {
 	name   string
 	wallet *C.struct_TWHDWallet
 }
 
-// NewWalletCoreRepository loads a BIP39 mnemonic into wallet-core and
-// returns a repository bound to it.
 func NewWalletCoreRepository(name, mnemonic string) (*WalletCoreRepository, error) {
 	if name == "" {
 		return nil, errors.New("repository name is required")
@@ -90,7 +71,6 @@ func NewWalletCoreRepository(name, mnemonic string) (*WalletCoreRepository, erro
 	}, nil
 }
 
-// Close releases the underlying TWHDWallet. Safe to call multiple times.
 func (r *WalletCoreRepository) Close() {
 	if r == nil || r.wallet == nil {
 		return
@@ -99,12 +79,9 @@ func (r *WalletCoreRepository) Close() {
 	r.wallet = nil
 }
 
-// Name returns the configured gate name this repository was created for.
 func (r *WalletCoreRepository) Name() string { return r.name }
 
-// DeriveEthereumAddress returns the Ethereum address for the BIP44 path
-// m/44'/60'/<account>'/<change>/<addressIndex> without exposing the
-// intermediate private key.
+// m/44'/60'/<account>'/<change>/<addressIndex>
 func (r *WalletCoreRepository) DeriveEthereumAddress(account, change, addressIndex uint32) (string, error) {
 	priv := r.derivedPrivateKey(account, change, addressIndex)
 	defer C.TWPrivateKeyDelete(priv)
@@ -124,10 +101,6 @@ func (r *WalletCoreRepository) DeriveEthereumAddress(account, change, addressInd
 	return types.TWStringGoString(unsafe.Pointer(desc)), nil
 }
 
-// SignEthereumTransaction signs an EIP-1559 dynamic-fee transaction with
-// the private key derived at m/44'/60'/<account>'/<change>/<addressIndex>.
-// The private key is materialised in process memory only for the duration
-// of the call and zeroed before return.
 func (r *WalletCoreRepository) SignEthereumTransaction(
 	account, change, addressIndex uint32,
 	p EthereumTxParams,
@@ -198,9 +171,6 @@ func (r *WalletCoreRepository) SignEthereumTransaction(
 	}, nil
 }
 
-// IsValidEthereumAddress checks an address with wallet-core's coin-aware
-// validator. Exposed as a package-level helper because it does not depend
-// on a particular HD wallet.
 func IsValidEthereumAddress(addr string) bool {
 	if addr == "" {
 		return false
@@ -253,9 +223,6 @@ func keccak256(data []byte) []byte {
 	return types.TWDataGoBytes(unsafe.Pointer(cOut))
 }
 
-// bigIntBytes returns the canonical big-endian byte encoding wallet-core
-// expects for uint256 fields. Zero is encoded as nil (empty bytes), which
-// the protobuf wire format treats identically to a zero-length payload.
 func bigIntBytes(n *big.Int) []byte {
 	if n == nil || n.Sign() == 0 {
 		return nil

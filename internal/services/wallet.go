@@ -5,8 +5,8 @@ import (
 	"math/big"
 	"strings"
 
-	"github.com/timur-makarov/sheepy-tt-go-wallet/internal/app/repositories"
-	"github.com/timur-makarov/sheepy-tt-go-wallet/internal/transport"
+	"github.com/timur-makarov/hot-wallet-manager/internal/app/repositories"
+	"github.com/timur-makarov/hot-wallet-manager/internal/transport"
 )
 
 type WalletService struct {

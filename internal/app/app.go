@@ -3,7 +3,7 @@ package app
 import (
 	"log/slog"
 
-	"github.com/timur-makarov/sheepy-tt-go-wallet/internal/config"
+	"github.com/timur-makarov/hot-wallet-manager/internal/config"
 )
 
 type App struct {

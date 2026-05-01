@@ -1,4 +1,3 @@
-# syntax=docker/dockerfile:1.7
 # https://github.com/trustwallet/wallet-core/blob/master/Dockerfile
 
 FROM --platform=linux/amd64 ubuntu:22.04 AS wallet-core-build
@@ -76,21 +75,16 @@ RUN make proto_gen
 
 RUN go test ./...
 
-RUN go build -o sheepy-tt-go-wallet ./cmd
+RUN go build -o hot-wallet-manager ./cmd
 
 FROM --platform=linux/amd64 ubuntu:22.04
 
 WORKDIR /app
 
-ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    ca-certificates \
-    && rm -rf /var/lib/apt/lists/*
-
-COPY --from=go-build /app/sheepy-tt-go-wallet /app/sheepy-tt-go-wallet
+COPY --from=go-build /app/hot-wallet-manager /app/hot-wallet-manager
 
 ENV WALLET_CONFIG=/app/config.json
 
 EXPOSE 8000
 
-CMD ["./sheepy-tt-go-wallet"]
+CMD ["./hot-wallet-manager"]

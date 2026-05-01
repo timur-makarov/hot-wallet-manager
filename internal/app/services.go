@@ -1,7 +1,7 @@
 package app
 
 import (
-	"github.com/timur-makarov/sheepy-tt-go-wallet/internal/services"
+	"github.com/timur-makarov/hot-wallet-manager/internal/services"
 )
 
 type Services struct {

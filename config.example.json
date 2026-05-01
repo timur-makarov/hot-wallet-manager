@@ -1,11 +1,11 @@
 {
   "config": {
-    "host": "127.0.0.1",
+    "host": "0.0.0.0",
     "port": 8000
   },
   "gates": [
     {
-      "name": "ethereum",
+      "name": "ethereum_sepolia",
       "mnemonic": "test test test test test test test test test test test junk"
     }
   ]

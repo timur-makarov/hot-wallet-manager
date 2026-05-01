@@ -1,6 +1,6 @@
 package app
 
-import "github.com/timur-makarov/sheepy-tt-go-wallet/internal/handlers"
+import "github.com/timur-makarov/hot-wallet-manager/internal/handlers"
 
 type Handlers struct {
 	WalletHandler handlers.WalletHandler
