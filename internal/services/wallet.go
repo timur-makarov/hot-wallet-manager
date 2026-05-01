@@ -5,7 +5,7 @@ import (
 	"math/big"
 	"strings"
 
-	"github.com/timur-makarov/hot-wallet-manager/internal/app/repositories"
+	"github.com/timur-makarov/hot-wallet-manager/internal/repositories"
 	"github.com/timur-makarov/hot-wallet-manager/internal/transport"
 )
 

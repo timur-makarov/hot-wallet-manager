@@ -3,8 +3,8 @@ package app
 import (
 	"fmt"
 
-	"github.com/timur-makarov/hot-wallet-manager/internal/app/repositories"
 	"github.com/timur-makarov/hot-wallet-manager/internal/config"
+	"github.com/timur-makarov/hot-wallet-manager/internal/repositories"
 )
 
 type Repositories struct {

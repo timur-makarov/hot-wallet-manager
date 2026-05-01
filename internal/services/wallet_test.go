@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/timur-makarov/hot-wallet-manager/internal/app/repositories"
+	"github.com/timur-makarov/hot-wallet-manager/internal/repositories"
 )
 
 const testMnemonic = "test test test test test test test test test test test junk"
